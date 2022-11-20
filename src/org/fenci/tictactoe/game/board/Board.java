@@ -46,9 +46,9 @@ public class Board extends JFrame {
         return INSTANCE;
     }
 
-    public void resetBoard() {
-        lettersOnBoard.clear();
-        repaint();
+    public void resetBoard() { //TODO: Fix this
+//        lettersOnBoard.clear();
+//        repaint();
     }
 
     public void drawLines(Graphics g) {
@@ -98,60 +98,65 @@ public class Board extends JFrame {
                     resetBoard();
                     return;
                 }
+                if (Rules.checkForWin() != null) {
+                    if (Rules.checkForWin().length == 3) {
+                        for (int i : Rules.checkForWin()) {
+                            System.out.print(i + " ");
+                        }
+                        return;
+                    }
+                }
 
                 if (e.getXOnScreen() > 100 && e.getXOnScreen() < 200 && e.getYOnScreen() > 100 && e.getYOnScreen() < 200 && !lettersOnBoard.containsKey(1)) {
                     System.out.println("1");
                     addLetterToBoard(Game.getINSTANCE().getLetter(), 1);
                     isPlayerTurn = false;
-                    bot.addBotLetterToBoard();
-                    isPlayerTurn = true;
+
                 } else if (e.getXOnScreen() > 200 && e.getXOnScreen() < 300 && e.getYOnScreen() > 100 && e.getYOnScreen() < 200 && !lettersOnBoard.containsKey(2)) {
                     System.out.println("2");
                     addLetterToBoard(Game.getINSTANCE().getLetter(), 2);
                     isPlayerTurn = false;
-                    bot.addBotLetterToBoard();
-                    isPlayerTurn = true;
+
                 } else if (e.getXOnScreen() > 300 && e.getXOnScreen() < 400 && e.getYOnScreen() > 100 && e.getYOnScreen() < 200 && !lettersOnBoard.containsKey(3)) {
                     System.out.println("3");
                     addLetterToBoard(Game.getINSTANCE().getLetter(), 3);
                     isPlayerTurn = false;
-                    bot.addBotLetterToBoard();
-                    isPlayerTurn = true;
+
                 } else if (e.getXOnScreen() > 100 && e.getXOnScreen() < 200 && e.getYOnScreen() > 200 && e.getYOnScreen() < 300 && !lettersOnBoard.containsKey(4)) {
                     System.out.println("4");
                     addLetterToBoard(Game.getINSTANCE().getLetter(), 4);
                     isPlayerTurn = false;
-                    bot.addBotLetterToBoard();
-                    isPlayerTurn = true;
+
                 } else if (e.getXOnScreen() > 200 && e.getXOnScreen() < 300 && e.getYOnScreen() > 200 && e.getYOnScreen() < 300 && !lettersOnBoard.containsKey(5)) {
                     System.out.println("5");
                     addLetterToBoard(Game.getINSTANCE().getLetter(), 5);
                     isPlayerTurn = false;
-                    bot.addBotLetterToBoard();
-                    isPlayerTurn = true;
+
                 } else if (e.getXOnScreen() > 300 && e.getXOnScreen() < 400 && e.getYOnScreen() > 200 && e.getYOnScreen() < 300 && !lettersOnBoard.containsKey(6)) {
                     System.out.println("6");
                     addLetterToBoard(Game.getINSTANCE().getLetter(), 6);
                     isPlayerTurn = false;
-                    bot.addBotLetterToBoard();
-                    isPlayerTurn = true;
+
                 } else if (e.getXOnScreen() > 100 && e.getXOnScreen() < 200 && e.getYOnScreen() > 300 && e.getYOnScreen() < 400 && !lettersOnBoard.containsKey(7)) {
                     System.out.println("7");
                     addLetterToBoard(Game.getINSTANCE().getLetter(), 7);
                     isPlayerTurn = false;
-                    bot.addBotLetterToBoard();
-                    isPlayerTurn = true;
+
                 } else if (e.getXOnScreen() > 200 && e.getXOnScreen() < 300 && e.getYOnScreen() > 300 && e.getYOnScreen() < 400 && !lettersOnBoard.containsKey(8)) {
                     System.out.println("8");
                     addLetterToBoard(Game.getINSTANCE().getLetter(), 8);
                     isPlayerTurn = false;
-                    bot.addBotLetterToBoard();
-                    isPlayerTurn = true;
+
                 } else if (e.getXOnScreen() > 300 && e.getXOnScreen() < 400 && e.getYOnScreen() > 300 && e.getYOnScreen() < 400 && !lettersOnBoard.containsKey(9)) {
                     System.out.println("9");
                     addLetterToBoard(Game.getINSTANCE().getLetter(), 9);
                     isPlayerTurn = false;
+
+                }
+                Rules.manageWin(getGraphics());
+                if (!isPlayerTurn) {
                     bot.addBotLetterToBoard();
+                    Rules.manageWin(getGraphics());
                     isPlayerTurn = true;
                 }
             }
@@ -261,7 +266,11 @@ public class Board extends JFrame {
                 }
             }
 
-            if (row == 3) if(lettersOnBoard.containsKey(5)) numbersInRows.add(5);
+            if (row == 3) {
+                if(lettersOnBoard.containsKey(5)) {
+                    if (lettersOnBoard.get(5).equals(player.getLetter())) numbersInRows.add(5);
+                }
+            }
 
             diagonalLettersInARow.add(new RowInARow(row, numbersInRows));
         }
@@ -314,6 +323,7 @@ public class Board extends JFrame {
         System.out.println("Winning move: " + Rules.canWinInOneMove(Player.PLAYER));
     }
 
+    @Override
     public void paint(Graphics g) {
         super.paint(g);
         drawLines(g);

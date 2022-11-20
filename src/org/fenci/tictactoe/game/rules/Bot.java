@@ -47,7 +47,8 @@ public class Bot implements Globals {
             if (Rules.canWinInOneMove(Player.PLAYER) != -1) {
                 move = Rules.canWinInOneMove(Player.PLAYER);
             } else {
-                if (areAnyBoxesEmpty()) move = getEmptyBoxes().toArray(new Integer[0])[(int) (Math.random() * getEmptyBoxes().size())];
+                if (areAnyBoxesEmpty())
+                    move = getEmptyBoxes().toArray(new Integer[0])[(int) (Math.random() * getEmptyBoxes().size())];
             }
         }
 

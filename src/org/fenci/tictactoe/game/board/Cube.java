@@ -5,23 +5,23 @@ public enum Cube {
 
     public static Cube fromInt(int i) {
         switch (i) {
-            case 0:
-                return TOP_LEFT;
             case 1:
-                return TOP_MIDDLE;
+                return TOP_LEFT;
             case 2:
-                return TOP_RIGHT;
+                return TOP_MIDDLE;
             case 3:
-                return MIDDLE_LEFT;
+                return TOP_RIGHT;
             case 4:
-                return MIDDLE_MIDDLE;
+                return MIDDLE_LEFT;
             case 5:
-                return MIDDLE_RIGHT;
+                return MIDDLE_MIDDLE;
             case 6:
-                return BOTTOM_LEFT;
+                return MIDDLE_RIGHT;
             case 7:
-                return BOTTOM_MIDDLE;
+                return BOTTOM_LEFT;
             case 8:
+                return BOTTOM_MIDDLE;
+            case 9:
                 return BOTTOM_RIGHT;
             default:
                 return null;
@@ -31,23 +31,23 @@ public enum Cube {
     public static int toInt(Cube cube) {
         switch (cube) {
             case TOP_LEFT:
-                return 0;
-            case TOP_MIDDLE:
                 return 1;
-            case TOP_RIGHT:
+            case TOP_MIDDLE:
                 return 2;
-            case MIDDLE_LEFT:
+            case TOP_RIGHT:
                 return 3;
-            case MIDDLE_MIDDLE:
+            case MIDDLE_LEFT:
                 return 4;
-            case MIDDLE_RIGHT:
+            case MIDDLE_MIDDLE:
                 return 5;
-            case BOTTOM_LEFT:
+            case MIDDLE_RIGHT:
                 return 6;
-            case BOTTOM_MIDDLE:
+            case BOTTOM_LEFT:
                 return 7;
-            case BOTTOM_RIGHT:
+            case BOTTOM_MIDDLE:
                 return 8;
+            case BOTTOM_RIGHT:
+                return 9;
             default:
                 return -1;
         }
@@ -56,23 +56,23 @@ public enum Cube {
     public static int[] getMiddleCoordinates(Cube cube) { //TODO: Check this it might be wrong idk
         switch (cube) {
             case TOP_LEFT:
-                return new int[]{150, 150};
+                return new int[]{150 , 150};
             case TOP_MIDDLE:
-                return new int[]{250, 150};
+                return new int[]{250 , 150};
             case TOP_RIGHT:
-                return new int[]{350, 150};
+                return new int[]{350 , 150};
             case MIDDLE_LEFT:
-                return new int[]{150, 250};
+                return new int[]{150 , 250};
             case MIDDLE_MIDDLE:
-                return new int[]{250, 250};
+                return new int[]{250 , 250};
             case MIDDLE_RIGHT:
-                return new int[]{350, 250};
+                return new int[]{350 , 250};
             case BOTTOM_LEFT:
-                return new int[]{150, 350};
+                return new int[]{150 , 350};
             case BOTTOM_MIDDLE:
-                return new int[]{250, 350};
+                return new int[]{250 , 350};
             case BOTTOM_RIGHT:
-                return new int[]{350, 350};
+                return new int[]{350 , 350};
             default:
                 return null;
         }
