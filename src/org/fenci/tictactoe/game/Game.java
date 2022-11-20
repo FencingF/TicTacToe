@@ -13,7 +13,7 @@ public class Game {
 
     public Game() {
         playerLetter = Letter.values()[(int) (Math.random() * 2)]; //gets a random letter
-        goingFirst = Math.random() < 0.9; //gets a random boolean
+        goingFirst = Math.random() < 0.5; //gets a random boolean
         INSTANCE = this;
     }
 

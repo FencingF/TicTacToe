@@ -46,6 +46,11 @@ public class Board extends JFrame {
         return INSTANCE;
     }
 
+    public void resetBoard() {
+        lettersOnBoard.clear();
+        repaint();
+    }
+
     public void drawLines(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
 
@@ -66,6 +71,11 @@ public class Board extends JFrame {
         g2d.drawLine(200, 100, 200, 400);
         g2d.drawLine(300, 100, 300, 400);
 
+        //draw a rectangle with rounded corners
+        g2d.drawRoundRect(345, 40, 125, 41, 10, 10);
+        g.setFont(new Font("Arial", Font.BOLD, 30));
+        g2d.drawString("Reset", 365, 70);
+
         //add mouse listener
 //        Bot.BotThread botThread = new Bot.BotThread();
 //        botThread.start();
@@ -83,6 +93,12 @@ public class Board extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (!isPlayerTurn) return;
+                //check if the mouse is in the reset button
+                if (e.getX() > 345 && e.getX() < 470 && e.getY() > 40 && e.getY() < 81) {
+                    resetBoard();
+                    return;
+                }
+
                 if (e.getXOnScreen() > 100 && e.getXOnScreen() < 200 && e.getYOnScreen() > 100 && e.getYOnScreen() < 200 && !lettersOnBoard.containsKey(1)) {
                     System.out.println("1");
                     addLetterToBoard(Game.getINSTANCE().getLetter(), 1);
@@ -166,32 +182,6 @@ public class Board extends JFrame {
         return emptyBoxes;
     }
 
-//    public List<RowInARow> getHorizontalLettersInARow(Player player) {
-//        List<RowInARow> horizontalLettersInARow = new ArrayList<>();
-//        List<Integer> numbersInRows;
-//        int[] rows = {1, 4, 7};
-//        for (int row : rows) {
-//            numbersInRows = new ArrayList<>();
-//            for (int i = row; i < row + 3 ; i++) {
-//                if (!lettersOnBoard.containsKey(i)) continue;
-//                if (lettersOnBoard.get(i).equals(player.getLetter())) {
-//                    if (lettersOnBoard.containsKey(i + 1)) {
-//                        if (lettersOnBoard.get(i + 1).equals(player.getLetter()) && i + 1 < row + 3) {
-//                            if (!numbersInRows.contains(i)) numbersInRows.add(i);
-//                        }
-//                    }
-//                    if (lettersOnBoard.containsKey(i - 1)) {
-//                        if (lettersOnBoard.get(i - 1).equals(player.getLetter()) && i - 1 >= row) {
-//                            if (!numbersInRows.contains(i)) numbersInRows.add(i);
-//                        }
-//                    }
-//                }
-//            }
-//            horizontalLettersInARow.add(new RowInARow(row, numbersInRows));
-//        }
-//        return horizontalLettersInARow;
-//    }
-
     public List<RowInARow> getHorizontalLettersInARow(Player player) {
         List<RowInARow> horizontalLettersInARow = new ArrayList<>();
         List<Integer> numbersInRows;
@@ -226,21 +216,23 @@ public class Board extends JFrame {
         int[] rows = {1, 2, 3};
         for (int row : rows) {
             numbersInRows = new ArrayList<>();
-            for (int i = row; i < row + 7 ; i += 3) {
-                if (!lettersOnBoard.containsKey(i)) continue;
-                if (lettersOnBoard.get(i).equals(player.getLetter())) {
-                    if (lettersOnBoard.containsKey(i + 3)) {
-                        if (lettersOnBoard.get(i + 3).equals(player.getLetter()) && i + 3 < row + 7) {
-                            if (!numbersInRows.contains(i)) numbersInRows.add(i);
-                        }
-                    }
-                    if (lettersOnBoard.containsKey(i - 3)) {
-                        if (lettersOnBoard.get(i - 3).equals(player.getLetter()) && i - 3 >= row) {
-                            if (!numbersInRows.contains(i)) numbersInRows.add(i);
-                        }
-                    }
+
+            if (lettersOnBoard.containsKey(row)) {
+                if (lettersOnBoard.get(row).equals(player.getLetter())) {
+                    numbersInRows.add(row);
                 }
             }
+            if (lettersOnBoard.containsKey(row + 3)) {
+                if (lettersOnBoard.get(row + 3).equals(player.getLetter())) {
+                    numbersInRows.add(row + 3);
+                }
+            }
+            if (lettersOnBoard.containsKey(row + 6)) {
+                if (lettersOnBoard.get(row + 6).equals(player.getLetter())) {
+                    numbersInRows.add(row + 6);
+                }
+            }
+
             verticalLettersInARow.add(new RowInARow(row, numbersInRows));
         }
         return verticalLettersInARow;
@@ -252,45 +244,31 @@ public class Board extends JFrame {
         int[] rows = {1, 3};
         for (int row : rows) {
             numbersInRows = new ArrayList<>();
-            for (int i = row; i < row + 9 ; i += 4) {
-                if (!lettersOnBoard.containsKey(i)) continue;
-                if (row == 1) {
-                    if (lettersOnBoard.get(i).equals(player.getLetter())) {
-                        if (lettersOnBoard.containsKey(i + 4)) {
-                            if (lettersOnBoard.get(i + 4).equals(player.getLetter()) && i + 4 < row + 9) {
-                                if (!numbersInRows.contains(i)) numbersInRows.add(i);
-                            }
-                        }
-                        if (lettersOnBoard.containsKey(i - 4)) {
-                            if (lettersOnBoard.get(i - 4).equals(player.getLetter()) && i - 4 >= row) {
-                                if (!numbersInRows.contains(i)) numbersInRows.add(i);
-                            }
-                        }
-                    }
-                } else {
-                    if (lettersOnBoard.get(i).equals(player.getLetter())) {
-                        if (lettersOnBoard.containsKey(i + 2)) {
-                            if (lettersOnBoard.get(i + 2).equals(player.getLetter())) {
-                                if (!numbersInRows.contains(i + 2)) numbersInRows.add(i + 2); //It wouldn't add 5 for some reason, so I just added it manually same thing for the i - 2
-                                if (!numbersInRows.contains(i)) numbersInRows.add(i);
-                            }
-                        }
-                        if (lettersOnBoard.containsKey(i - 2)) {
-                            if (lettersOnBoard.get(i - 2).equals(player.getLetter()) && i - 2 >= row) {
-                                if (!numbersInRows.contains(i - 2)) numbersInRows.add(i - 2);
-                                if (!numbersInRows.contains(i)) numbersInRows.add(i);
-                            }
-                        }
-                    }
+
+            if (lettersOnBoard.containsKey(row)) {
+                if (lettersOnBoard.get(row).equals(player.getLetter())) {
+                    numbersInRows.add(row);
                 }
             }
-            //remove any duplicates from the list without making a hashset
+            if (lettersOnBoard.containsKey(row + 4)) {
+                if (lettersOnBoard.get(row + 4).equals(player.getLetter())) {
+                    numbersInRows.add(row + 4);
+                }
+            }
+            if (lettersOnBoard.containsKey(row + 8)) {
+                if (lettersOnBoard.get(row + 8).equals(player.getLetter())) {
+                    numbersInRows.add(row + 8);
+                }
+            }
+
+            if (row == 3) if(lettersOnBoard.containsKey(5)) numbersInRows.add(5);
+
             diagonalLettersInARow.add(new RowInARow(row, numbersInRows));
         }
         return diagonalLettersInARow;
     }
 
-    public static Map<Integer, Letter> getLettersOnBoard() {
+    public Map<Integer, Letter> getLettersOnBoard() {
         return lettersOnBoard;
     }
 

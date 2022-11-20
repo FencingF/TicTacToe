@@ -22,49 +22,44 @@ public class Rules implements Globals {
                 int[] winningRow = Rows.getRowFromNumbers(numbers[0], numbers[1]);
                 //get the number from the winning row that is not in the numbers array
                 for (int i : winningRow) {
-                    if (i != numbers[0] && i != numbers[1]) {
+                    if (i != numbers[0] && i != numbers[1] && !Board.getINSTANCE().getLettersOnBoard().containsKey(i)) {
                         winningBox = i;
                     }
                 }
-            } else {
-                System.out.println("Less than two");
-                break; //change this from break to return
             }
         }
-//        for (RowInARow row : Globals.getVerticalLettersInARow(player)) {
-//            if (row.getBoxes().size() >= 2) {
-//                //find the number that is not in the row
-//                int[] numbers = new int[2];
-//                numbers[0] = row.getBoxes().get(0);
-//                numbers[1] = row.getBoxes().get(1);
-//                int[] winningRow = Rows.getRowFromNumbers(numbers[0], numbers[1]);
-//                //get the number from the winning row that is not in the numbers array
-//                for (int i : winningRow) {
-//                    if (i != numbers[0] && i != numbers[1]) {
-//                        winningBox = i;
-//                    }
-//                }
-//            } else {
-//                break;
-//            }
-//        }
-//        for (RowInARow row : Globals.getDiagonalLettersInARow(player)) {
-//            if (row.getBoxes().size() >= 2) {
-//                //find the number that is not in the row
-//                int[] numbers = new int[2];
-//                numbers[0] = row.getBoxes().get(0);
-//                numbers[1] = row.getBoxes().get(1);
-//                int[] winningRow = Rows.getRowFromNumbers(numbers[0], numbers[1]);
-//                //get the number from the winning row that is not in the numbers array
-//                for (int i : winningRow) {
-//                    if (i != numbers[0] && i != numbers[1]) {
-//                        winningBox = i;
-//                    }
-//                }
-//            } else {
-//                break;
-//            }
-//        }
+        for (RowInARow row : Board.getINSTANCE().getVerticalLettersInARow(player)) {
+            System.out.println(row.getRow() + " " + row.getBoxes());
+            if (row.getBoxes().size() >= 2) {
+                //find the number that is not in the row
+                int[] numbers = new int[2];
+                numbers[0] = row.getBoxes().get(0);
+                numbers[1] = row.getBoxes().get(1);
+                int[] winningRow = Rows.getRowFromNumbers(numbers[0], numbers[1]);
+                //get the number from the winning row that is not in the numbers array
+                for (int i : winningRow) {
+                    if (i != numbers[0] && i != numbers[1] && !Board.getINSTANCE().getLettersOnBoard().containsKey(i)) {
+                        winningBox = i;
+                    }
+                }
+            }
+        }
+        for (RowInARow row : Board.getINSTANCE().getDiagonalLettersInARow(player)) {
+            System.out.println(row.getRow() + " " + row.getBoxes());
+            if (row.getBoxes().size() >= 2) {
+                //find the number that is not in the row
+                int[] numbers = new int[2];
+                numbers[0] = row.getBoxes().get(0);
+                numbers[1] = row.getBoxes().get(1);
+                int[] winningRow = Rows.getRowFromNumbers(numbers[0], numbers[1]);
+                //get the number from the winning row that is not in the numbers array
+                for (int i : winningRow) {
+                    if (i != numbers[0] && i != numbers[1] && !Board.getINSTANCE().getLettersOnBoard().containsKey(i)) {
+                        winningBox = i;
+                    }
+                }
+            }
+        }
         return winningBox;
     }
 }

@@ -4,7 +4,7 @@ public enum Player implements Globals {
     BOT, PLAYER;
 
     public Letter getLetter() {
-        Letter letter = null;
+        Letter letter;
         if (getGame().getLetter() == Letter.X) {
             letter = this == PLAYER ? Letter.X : Letter.O;
         } else {

@@ -43,4 +43,11 @@ public interface Globals {
         }
         return emptyBoxes;
     }
+
+    default boolean areAnyBoxesEmpty() {
+        for (int i : getBoard().getEmtpyBoxes()) {
+            if (i != 0) return true;
+        }
+        return false;
+    }
 }
