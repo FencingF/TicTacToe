@@ -1,6 +1,7 @@
 package org.fenci.tictactoe.game.rules;
 
 import org.fenci.tictactoe.game.Globals;
+import org.fenci.tictactoe.game.Letter;
 import org.fenci.tictactoe.game.Player;
 import org.fenci.tictactoe.game.board.Board;
 import org.fenci.tictactoe.game.board.Cube;

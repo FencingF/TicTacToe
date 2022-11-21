@@ -23,6 +23,7 @@ public class Board extends JFrame implements Globals {
     public boolean isPlayerTurn;
 
     int antiLoop = 0;
+    int antiLoop2 = 0;
 
     public Board() {
         JPanel panel = new JPanel();
@@ -52,6 +53,7 @@ public class Board extends JFrame implements Globals {
         lettersOnBoard.clear();
         //redraw the board
         repaint();
+        antiLoop2 = 0;
     }
 
     public void drawLines(Graphics g) {
@@ -198,17 +200,17 @@ public class Board extends JFrame implements Globals {
             numbersInRows = new ArrayList<>();
 
             if (lettersOnBoard.containsKey(row)) {
-                if (lettersOnBoard.get(row).equals(player.getLetter())) {
+                if (lettersOnBoard.get(row).equals(player.getPlayerLetter())) {
                     numbersInRows.add(row);
                 }
             }
             if (lettersOnBoard.containsKey(row + 1)) {
-                if (lettersOnBoard.get(row + 1).equals(player.getLetter())) {
+                if (lettersOnBoard.get(row + 1).equals(player.getPlayerLetter())) {
                     numbersInRows.add(row + 1);
                 }
             }
             if (lettersOnBoard.containsKey(row + 2)) {
-                if (lettersOnBoard.get(row + 2).equals(player.getLetter())) {
+                if (lettersOnBoard.get(row + 2).equals(player.getPlayerLetter())) {
                     numbersInRows.add(row + 2);
                 }
             }
@@ -226,17 +228,17 @@ public class Board extends JFrame implements Globals {
             numbersInRows = new ArrayList<>();
 
             if (lettersOnBoard.containsKey(row)) {
-                if (lettersOnBoard.get(row).equals(player.getLetter())) {
+                if (lettersOnBoard.get(row).equals(player.getPlayerLetter())) {
                     numbersInRows.add(row);
                 }
             }
             if (lettersOnBoard.containsKey(row + 3)) {
-                if (lettersOnBoard.get(row + 3).equals(player.getLetter())) {
+                if (lettersOnBoard.get(row + 3).equals(player.getPlayerLetter())) {
                     numbersInRows.add(row + 3);
                 }
             }
             if (lettersOnBoard.containsKey(row + 6)) {
-                if (lettersOnBoard.get(row + 6).equals(player.getLetter())) {
+                if (lettersOnBoard.get(row + 6).equals(player.getPlayerLetter())) {
                     numbersInRows.add(row + 6);
                 }
             }
@@ -254,24 +256,24 @@ public class Board extends JFrame implements Globals {
             numbersInRows = new ArrayList<>();
 
             if (lettersOnBoard.containsKey(row)) {
-                if (lettersOnBoard.get(row).equals(player.getLetter())) {
+                if (lettersOnBoard.get(row).equals(player.getPlayerLetter())) {
                     numbersInRows.add(row);
                 }
             }
             if (lettersOnBoard.containsKey(row + 4)) {
-                if (lettersOnBoard.get(row + 4).equals(player.getLetter())) {
+                if (lettersOnBoard.get(row + 4).equals(player.getPlayerLetter())) {
                     numbersInRows.add(row + 4);
                 }
             }
             if (lettersOnBoard.containsKey(row + 8)) {
-                if (lettersOnBoard.get(row + 8).equals(player.getLetter())) {
+                if (lettersOnBoard.get(row + 8).equals(player.getPlayerLetter())) {
                     numbersInRows.add(row + 8);
                 }
             }
 
             if (row == 3) {
                 if(lettersOnBoard.containsKey(5)) {
-                    if (lettersOnBoard.get(5).equals(player.getLetter())) numbersInRows.add(5);
+                    if (lettersOnBoard.get(5).equals(player.getPlayerLetter())) numbersInRows.add(5);
                 }
             }
 
@@ -286,43 +288,53 @@ public class Board extends JFrame implements Globals {
 
     public void addLetterToBoard(Letter letter, int cube) {
         Graphics g = getGraphics();
-        //set the font
-        g.setFont(new Font("Arial", Font.BOLD, 100));
-        //get font height
-        lettersOnBoard.put(cube, letter);
-        switch (cube) {
-            case 1:
-                g.drawString(letter.toString(), 150 - 35, 150 + 40);
-                break;
-            case 2:
-                g.drawString(letter.toString(), 250 - 35, 150 + 40);
-                break;
-            case 3:
-                g.drawString(letter.toString(), 350 - 35, 150 + 40);
-                break;
-            case 4:
-                g.drawString(letter.toString(), 150 - 35, 250 + 40);
-                break;
-            case 5:
-                g.drawString(letter.toString(), 250 - 35, 250 + 40);
-                break;
-            case 6:
-                g.drawString(letter.toString(), 350 - 35, 250 + 40);
-                break;
-            case 7:
-                g.drawString(letter.toString(), 150 - 35, 350 + 40);
-                break;
-            case 8:
-                g.drawString(letter.toString(), 250 - 35, 350 + 40);
-                break;
-            case 9:
-                g.drawString(letter.toString(), 350 - 35, 350 + 40);
-                break;
+        if (Rules.checkForWin() == null) {
+            //set the font
+            g.setFont(new Font("Arial", Font.BOLD, 100));
+            //get font height
+            lettersOnBoard.put(cube, letter);
+            switch (cube) {
+                case 1:
+                    g.drawString(letter.toString(), 150 - 35, 150 + 40);
+                    break;
+                case 2:
+                    g.drawString(letter.toString(), 250 - 35, 150 + 40);
+                    break;
+                case 3:
+                    g.drawString(letter.toString(), 350 - 35, 150 + 40);
+                    break;
+                case 4:
+                    g.drawString(letter.toString(), 150 - 35, 250 + 40);
+                    break;
+                case 5:
+                    g.drawString(letter.toString(), 250 - 35, 250 + 40);
+                    break;
+                case 6:
+                    g.drawString(letter.toString(), 350 - 35, 250 + 40);
+                    break;
+                case 7:
+                    g.drawString(letter.toString(), 150 - 35, 350 + 40);
+                    break;
+                case 8:
+                    g.drawString(letter.toString(), 250 - 35, 350 + 40);
+                    break;
+                case 9:
+                    g.drawString(letter.toString(), 350 - 35, 350 + 40);
+                    break;
+            }
         }
         if (!areAnyBoxesEmpty() && Rules.checkForWin() == null) {
             g.setColor(Color.RED);
             g.drawString("Draw!", 115, 275);
         }
+        if (Rules.checkForWin() != null && antiLoop2 == 0) {
+            Letter winningLetter = lettersOnBoard.get(Rules.checkForWin()[0]);
+            Player winningPlayer = Player.getPlayerFromLetter(winningLetter);
+            g.setColor(Color.RED);
+            g.drawString(winningPlayer.equals(Player.PLAYER) ? "You win!" : "Bot wins!", 30, 275);
+            antiLoop2++;
+        }
+
         System.out.println("Winning move: " + Rules.canWinInOneMove(Player.PLAYER));
     }
 

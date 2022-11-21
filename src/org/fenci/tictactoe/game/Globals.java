@@ -1,10 +1,8 @@
 package org.fenci.tictactoe.game;
 
 import org.fenci.tictactoe.game.board.Board;
-import org.fenci.tictactoe.game.board.RowInARow;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public interface Globals {
@@ -13,7 +11,7 @@ public interface Globals {
         return Game.getINSTANCE();
     }
 
-    default Letter getLetter() {
+    default Letter getPlayerLetter() {
         return getGame().getLetter();
     }
 

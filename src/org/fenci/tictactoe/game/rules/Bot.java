@@ -33,7 +33,7 @@ public class Bot implements Globals {
                 move = 5;
             } else {
                 //get random move from the empty boxes
-                move = getEmptyBoxes().toArray(new Integer[0])[(int) (Math.random() * getEmptyBoxes().size())];
+                if (areAnyBoxesEmpty()) move = getEmptyBoxes().toArray(new Integer[0])[(int) (Math.random() * getEmptyBoxes().size())];
             }
 
             if (Rules.canWinInOneMove(Player.PLAYER) != -1) {
@@ -47,8 +47,7 @@ public class Bot implements Globals {
             if (Rules.canWinInOneMove(Player.PLAYER) != -1) {
                 move = Rules.canWinInOneMove(Player.PLAYER);
             } else {
-                if (areAnyBoxesEmpty())
-                    move = getEmptyBoxes().toArray(new Integer[0])[(int) (Math.random() * getEmptyBoxes().size())];
+                if (areAnyBoxesEmpty()) move = getEmptyBoxes().toArray(new Integer[0])[(int) (Math.random() * getEmptyBoxes().size())];
             }
         }
 
