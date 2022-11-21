@@ -1,6 +1,7 @@
 package org.fenci.tictactoe.game.board;
 
 import org.fenci.tictactoe.game.Game;
+import org.fenci.tictactoe.game.Globals;
 import org.fenci.tictactoe.game.Letter;
 import org.fenci.tictactoe.game.Player;
 import org.fenci.tictactoe.game.rules.Bot;
@@ -13,7 +14,7 @@ import java.awt.event.MouseListener;
 import java.util.*;
 import java.util.List;
 
-public class Board extends JFrame {
+public class Board extends JFrame implements Globals {
 
     private static Map<Integer, Letter> lettersOnBoard = new HashMap<>();
 
@@ -47,8 +48,10 @@ public class Board extends JFrame {
     }
 
     public void resetBoard() { //TODO: Fix this
-//        lettersOnBoard.clear();
-//        repaint();
+        //reset everything
+        lettersOnBoard.clear();
+        //redraw the board
+        repaint();
     }
 
     public void drawLines(Graphics g) {
@@ -316,10 +319,10 @@ public class Board extends JFrame {
                 g.drawString(letter.toString(), 350 - 35, 350 + 40);
                 break;
         }
-//        for (RowInARow row : getHorizontalLettersInARow(Player.PLAYER)) {
-//            System.out.println(row.getRow() + " " + row.getBoxes());
-//        }
-//        System.out.println(Arrays.toString(getEmtpyBoxes()));
+        if (!areAnyBoxesEmpty() && Rules.checkForWin() == null) {
+            g.setColor(Color.RED);
+            g.drawString("Draw!", 115, 275);
+        }
         System.out.println("Winning move: " + Rules.canWinInOneMove(Player.PLAYER));
     }
 
